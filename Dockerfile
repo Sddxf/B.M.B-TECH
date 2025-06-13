@@ -6,13 +6,16 @@ RUN apt-get update && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
+# Set work directory
+WORKDIR /app
+
 # Copy only package.json and install dependencies
-COPY package.json.
+COPY package.json /app/
 
 RUN npm install
 
 # Copy all other source code
-COPY..
+COPY. /app/
 
 # Expose the port your app uses
 EXPOSE 8080
