@@ -1,24 +1,23 @@
 FROM node:lts-buster
 
-# Install system dependencies
-RUN apt-get update && \
-  apt-get install -y ffmpeg imagemagick webp git && \
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/*
+   # Install system dependencies
+   RUN apt-get update && \
+     apt-get install -y ffmpeg imagemagick webp git && \
+     apt-get clean && \
+     rm -rf /var/lib/apt/lists/*
 
-# Set work directory
-WORKDIR /app
+   # Set working directory
+   WORKDIR /app
 
-# Copy only package.json and install dependencies
-COPY package.json /app/
+   # Copy package.json and install dependencies
+   COPY package.json /app/
+   RUN npm install
 
-RUN npm install
+   # Copy all other source code
+   COPY. /app/
 
-# Copy all other source code
-COPY. /app/
+   # Expose the port your app uses
+   EXPOSE 8080
 
-# Expose the port your app uses
-EXPOSE 8080
-
-# Start the app
-CMD ["node", "bmbtech.js"]
+   # Start the app
+   CMD ["node", "bmbtech.js"]
